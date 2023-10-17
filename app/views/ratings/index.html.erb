@@ -1,0 +1,10 @@
+<h2>List of ratings</h2>
+
+<ul>
+ <% @ratings.each do |rating| %>
+   <li> <%= rating %> </li>
+ <% end %>
+</ul>
+
+<strong>Total ratings:</strong>
+<%= @ratings.count %>
