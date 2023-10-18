@@ -6,8 +6,8 @@
  beer has not yet been rated!
 <% else %>
  Beer has
- <%= @beer.ratings.count %>
- ratings with an average of
+ <%= pluralize(@beer.ratings.count, 'rating') %>
+ with an average of
  <%= @beer.average_rating %>
 <% end %>
 
