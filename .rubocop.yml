@@ -70,5 +70,9 @@ Naming/MethodParameterName:
 Metrics/BlockLength:
   Enabled: false
 
+Metrics/MethodLength:
+  Enabled: true
+  Max: 15
+
 Layout/IndentationStyle:
   Enabled: false
