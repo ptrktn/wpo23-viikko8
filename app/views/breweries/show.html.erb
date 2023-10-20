@@ -2,6 +2,15 @@
 
 <%= render @brewery %>
 
+<p>
+  <% if @brewery.ratings.present? %>
+  Brewery has
+  <%= pluralize(@brewery.ratings.count, 'rating') %>
+  with an average of
+  <%= @brewery.average_rating %>
+  <% end %>
+</p>
+
 <div>
   <%= link_to "Edit this brewery", edit_brewery_path(@brewery) %> |
   <%= link_to "Back to breweries", breweries_path %>
