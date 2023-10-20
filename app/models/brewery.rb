@@ -5,6 +5,6 @@ class Brewery < ApplicationRecord
   has_many :ratings, through: :beers
 
   def to_s
-    "#{self.name}"
+    name.to_s
   end
 end
