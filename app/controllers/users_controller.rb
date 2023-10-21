@@ -54,6 +54,7 @@ class UsersController < ApplicationController
     raise 'Unauthorized' unless current_user == @user
 
     @user.destroy
+    session[:user_id] = nil
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
