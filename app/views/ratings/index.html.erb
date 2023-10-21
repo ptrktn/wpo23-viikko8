@@ -4,9 +4,7 @@
  <% @ratings.each do |rating| %>
  <li>
    <%= render rating %>
-   <%= link_to("delete",
-	   rating_path(rating.id),
-       data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }) %>
+   <%= link_to rating.user.username, rating.user %>
  </li>
  <% end %>
 </ul>
