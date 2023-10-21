@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :beer_clubs, through: :memberships
 
   def password_special_characters
-    errors.add(:password, 'must contain at least one uppercase character') unless password.match(/[A-Z]+/)
-    errors.add(:password, 'must contain at least one digit') unless password.match(/\d+/)
+    errors.add(:password, 'must contain at least one uppercase character') unless password&.match(/[A-Z]+/)
+    errors.add(:password, 'must contain at least one digit') unless password&.match(/\d+/)
   end
 end
