@@ -1,6 +1,35 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @user %>
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+
+<% if @user.ratings.empty? %>
+ <p>User has not rated any beers</p>
+<% else %>
+ <p>
+ User has made
+ <%= pluralize(@user.ratings.count, 'rating') %>
+ average rating
+ <%= sprintf("%.2f", @user.average_rating) %>
+ </p>
+
+ <p>
+   <strong>Ratings</strong>
+ </p>
+
+ <ul>
+   <% @user.ratings.each do |rating| %>
+   <li>
+	 <%= render rating %>
+	 <%= link_to("delete",
+		 rating_path(rating.id),
+		 data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }) %>
+   </li>
+   <% end %>
+ </ul>
+ <% end %>
 
 <div>
   <%= link_to "Edit this user", edit_user_path(@user) %> |
