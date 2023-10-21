@@ -5,6 +5,25 @@
   <%= @user.username %>
 </p>
 
+
+<p>
+<% if @user.beer_clubs.empty? %>
+ Not a member of any beer club
+<% else %>
+ Belongs to
+ <%= pluralize(@user.beer_clubs.count, 'club') %>
+
+  <p><strong>Memberhips:</strong></p>
+
+  <ul>
+	<% @user.beer_clubs.each do |beer_club| %>
+	<li><%= link_to beer_club.name, beer_club %></li>
+	<% end %>
+  </ul>
+<% end %>
+</p>
+
+
 <p>
 <% if @user.ratings.empty? %>
  <p>User has not rated any beers</p>
@@ -31,24 +50,6 @@
    <% end %>
  </ul>
  <% end %>
-</p>
-
-
-<p>
-<% if @user.beer_clubs.empty? %>
- Not a member of any beer club
-<% else %>
- Belongs to
- <%= pluralize(@user.beer_clubs.count, 'club') %>
-
-  <p><strong>Memberhips:</strong></p>
-
-  <ul>
-	<% @user.beer_clubs.each do |beer_club| %>
-	<li><%= link_to beer_club.name, beer_club %></li>
-	<% end %>
-  </ul>
-<% end %>
 </p>
 
 <div>
