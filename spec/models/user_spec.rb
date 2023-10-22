@@ -70,6 +70,37 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "favorite brewery" do
+    let(:user){ FactoryBot.create(:user) }
+
+    it "has method for determining one" do
+      expect(user).to respond_to(:favorite_brewery)
+    end
+
+    it "without ratings does not have one" do
+      expect(user.favorite_brewery).to eq(nil)
+    end
+
+    it "is the only rated if only one rating" do
+      beer = FactoryBot.create(:beer)
+      FactoryBot.create(:rating, score: 20, beer:, user:)
+
+      expect(user.favorite_brewery).to eq(beer.brewery.name)
+    end
+
+    it "is the one with highest rating if several rated" do
+      [5, 10, 15].each do |delta|
+        %w[Asahi Kirin Sapporo].each do |brewery_name|
+          brewery = Brewery.create(name: brewery_name, year: 1970)
+          create_beers_with_many_ratings({ user:, brewery: }, delta + 10, delta + 20, delta + 15, delta + 7, delta + 9)
+          @favorite_brewery = brewery_name
+        end
+      end
+
+      expect(user.favorite_brewery).to eq(@favorite_brewery)
+    end
+  end
+
   describe "with an invalid password" do
     let(:user) { User.create(username: "Pekka", password:, password_confirmation: password) }
     context "when passowrd is too short" do
@@ -109,7 +140,11 @@ RSpec.describe User, type: :model do
   end
 
   def create_beer_with_rating(object, score)
-    beer = FactoryBot.create(:beer, style: object[:style] || "Lager")
+    beer = FactoryBot.create(
+      :beer,
+      brewery: object[:brewery] || FactoryBot.create(:brewery),
+      style: object[:style] || "Lager"
+    )
     FactoryBot.create(:rating, beer:, score:, user: object[:user])
     beer
   end

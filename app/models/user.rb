@@ -40,4 +40,20 @@ class User < ApplicationRecord
     result = ActiveRecord::Base.connection.execute(sql).first.flatten.to_a
     result[1]
   end
+
+  def favorite_brewery
+    return nil if ratings.empty?
+
+    sql = ActiveRecord::Base.sanitize_sql_for_conditions(
+      [
+        'select name from breweries where id = (select brewery_id from ( ' \
+        'select beers.brewery_id as brewery_id, avg(ratings.score) as avg_rating from ratings ' \
+        'inner join beers on ratings.beer_id = beers.id ' \
+        'where ratings.user_id = :user_id ' \
+        'group by 1 order by 2 desc limit 1) x)', { user_id: id }
+      ]
+    )
+    result = ActiveRecord::Base.connection.execute(sql).first.flatten.to_a
+    result[1]
+  end
 end
