@@ -51,8 +51,15 @@
    </li>
    <% end %>
  </ul>
+
+  <p>
+	User's favorite style is <%= @user.favorite_style %>
+  </p>
  <% end %>
 </p>
+
+
+
 
 <div>
   <% if @user == current_user %>
