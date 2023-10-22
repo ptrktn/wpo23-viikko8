@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "with an invalid password" do
-    let(:user){ User.create username: "Pekka", password: password, password_confirmation: password }
+    let(:user) { User.create username: "Pekka", password:, password_confirmation: password }
     context "when passowrd is too short" do
       let(:password) { "abc" }
 
@@ -33,11 +33,10 @@ RSpec.describe User, type: :model do
         expect(User.count).to eq(0)
       end
     end
-
   end
-  
+
   describe "with a proper password" do
-    let(:user){ User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1" }
+    let(:user) { User.create username: "Pekka", password: "Secret1", password_confirmation: "Secret1" }
     let(:test_brewery) { Brewery.new name: "test", year: 2000 }
     let(:test_beer) { Beer.create name: "testbeer", style: "teststyle", brewery: test_brewery }
 
