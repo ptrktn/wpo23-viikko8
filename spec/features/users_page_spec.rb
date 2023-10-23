@@ -35,6 +35,21 @@ describe "User" do
       expect(page).to have_content "#{beer.name} 10"
       expect(page).not_to have_content "#{beer2.name} 20"
     end
+
+    it "removes ratings from database when user clicks delete" do
+      create_beer_with_rating({ user: @user }, 10)
+      create_beer_with_rating({ user: @user }, 10)
+
+      sign_in(username: "Pekka", password: "Foobar1")
+
+      visit user_path(@user)
+
+      2.times do
+        expect {
+          page.all('a', text: 'delete')[0].click
+        }.to change{ Rating.count }.by(-1)
+      end
+    end
   end
 
   it "when signed up with good credentials, is added to the system" do
@@ -44,7 +59,7 @@ describe "User" do
     fill_in('user_password', with: 'Secret55')
     fill_in('user_password_confirmation', with: 'Secret55')
 
-    expect{
+    expect {
       click_button('Create User')
     }.to change{ User.count }.by(1)
   end
