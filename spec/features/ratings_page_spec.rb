@@ -14,6 +14,7 @@ describe "Rating" do
 
   it "when given, is registered to the beer and user who is signed in" do
     visit new_rating_path
+
     select('iso 3', from: 'rating[beer_id]')
     fill_in('rating[score]', with: '15')
 
@@ -24,5 +25,14 @@ describe "Rating" do
     expect(user.ratings.count).to eq(1)
     expect(beer1.ratings.count).to eq(1)
     expect(beer1.average_rating).to eq(15.0)
+  end
+
+  it "shows the number of ratings" do
+    create_beer_with_rating({ user: }, 25)
+    create_beer_with_rating({ user: }, 25)
+
+    visit ratings_path
+
+    expect(page).to have_content "Total ratings: 2"
   end
 end
