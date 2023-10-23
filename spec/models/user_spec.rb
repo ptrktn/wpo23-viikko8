@@ -61,14 +61,19 @@ RSpec.describe User, type: :model do
     end
 
     it "is the one with highest rating if several rated" do
-      [5, 10, 15].each do |delta|
-        %w[Lager Stout Weizen].each do |style|
-          create_beers_with_many_ratings({ user:, style: }, delta + 10, delta + 20, delta + 15, delta + 7, delta + 9)
-          @favorite_style = style
-        end
+      delta = { "Lager" => 5, "Stout" => 10, "Weizen" => 15 }
+      %w[Lager Stout Weizen].each do |style|
+        create_beers_with_many_ratings(
+          { user:, style: },
+          delta[style] + 10,
+          delta[style] + 20,
+          delta[style] + 15,
+          delta[style] + 7,
+          delta[style] + 9
+        )
       end
 
-      expect(user.favorite_style).to eq(@favorite_style)
+      expect(user.favorite_style).to eq(delta.key(delta.values.max))
     end
   end
 
@@ -91,15 +96,20 @@ RSpec.describe User, type: :model do
     end
 
     it "is the one with highest rating if several rated" do
-      [5, 10, 15].each do |delta|
-        %w[Asahi Kirin Sapporo].each do |brewery_name|
-          brewery = Brewery.create(name: brewery_name, year: 1970)
-          create_beers_with_many_ratings({ user:, brewery: }, delta + 10, delta + 20, delta + 15, delta + 7, delta + 9)
-          @favorite_brewery = brewery_name
-        end
+      delta = { "Asahi" => 5, "Kirin" => 10, "Sapporo" => 15 }
+      %w[Asahi Kirin Sapporo].each do |brewery_name|
+        brewery = Brewery.create(name: brewery_name, year: 1970)
+        create_beers_with_many_ratings(
+          { user:, brewery: },
+          delta[brewery_name] + 10,
+          delta[brewery_name] + 20,
+          delta[brewery_name] + 15,
+          delta[brewery_name] + 7,
+          delta[brewery_name] + 9
+        )
       end
 
-      expect(user.favorite_brewery).to eq(@favorite_brewery)
+      expect(user.favorite_brewery).to eq(delta.key(delta.values.max))
     end
   end
 
