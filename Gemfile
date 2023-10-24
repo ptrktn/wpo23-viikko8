@@ -77,6 +77,8 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
   gem 'launchy'
+  gem 'simplecov', require: false
+  gem 'rubocop'
 end
 
 gem 'bcrypt', '~> 3.1.7'
