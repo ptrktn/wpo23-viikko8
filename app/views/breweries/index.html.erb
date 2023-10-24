@@ -20,9 +20,9 @@
   <% end %>
 </div>
 
-<%= link_to "New brewery", new_brewery_path %>
+<%= link_to "New brewery", new_brewery_path if current_user %>
 
-  <p>
-	<%= link_to 'list of beers', beers_path %>
-  </p>
+<p>
+  <%= link_to 'list of beers', beers_path %>
+</p>
 
