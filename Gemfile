@@ -79,6 +79,7 @@ group :test do
   gem 'launchy'
   gem 'simplecov', require: false
   gem 'rubocop'
+  gem 'webmock'
 end
 
 gem 'bcrypt', '~> 3.1.7'
