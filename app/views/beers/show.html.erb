@@ -8,12 +8,26 @@
  Beer has
  <%= pluralize(@beer.ratings.count, 'rating') %>
  with an average of
- <%= @beer.average_rating %>
+ <%= sprintf("%.2f", @beer.average_rating) %>
 <% end %>
 
-<div>
-  <%= link_to "Edit this beer", edit_beer_path(@beer) %> |
-  <%= link_to "Back to beers", beers_path %>
+<% if current_user %>
+  <h4>give a rating:</h4>
 
-  <%= button_to "Destroy this beer", @beer, method: :delete %>
-</div>
+  <p>
+  <%= form_with(model: @rating) do |form| %>
+    <%= form.hidden_field :beer_id %>
+    score: <%= form.number_field :score %>
+    <%= form.submit "Create rating" %>
+  <% end %>
+  </p>
+
+  <div>
+    <%= link_to "Edit this beer", edit_beer_path(@beer) %>
+    <%= button_to "Destroy this beer", @beer, method: :delete %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to "Back to beers", beers_path %>
+</p>
