@@ -8,6 +8,17 @@
 <% end %>
 
 <% if @places %>
+  <p>
+	<strong>The current beer weather in <%= @weather.dig(:request, :query) %></strong>
+  <p><%= @weather.dig(:current, :temperature) %>&#8451;</p>
+  <p><img src="<%= @weather.dig(:current, :weather_icons)&.first %>"
+		alt="<%= @weather.dig(:current, :weather_descriptions)&.first %>">
+  </p>
+  <p>
+	<strong>Wind</strong> <%= @weather.dig(:current, :wind_speed) %>,
+    direction <%= @weather.dig(:current, :wind_dir) %>
+  </p>
+  <p>
   <table>
     <thead>
       <% Place.rendered_fields.each do |field| %>
@@ -28,4 +39,5 @@
       </tr>
     <% end %>
   </table>
+  </p>
 <% end %>
