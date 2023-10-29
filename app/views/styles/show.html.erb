@@ -2,6 +2,17 @@
 
 <%= render @style %>
 
+<% if @style.beers.count.positive? %>
+<p>
+  <strong>Beers:</strong>
+  <ul>
+	<% @style.beers.each do |beer| %>
+	<li><%= link_to beer.name, beer %></li>
+	<% end %>
+  </ul>
+</p>
+<% end %>
+
 <div>
   <%= link_to "Edit this style", edit_style_path(@style) %> |
   <%= link_to "Back to styles", styles_path %>
