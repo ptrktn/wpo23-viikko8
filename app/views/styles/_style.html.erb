@@ -9,4 +9,16 @@
     <%= style.description %>
   </p>
 
+
+  <% if style.beers.count.positive? %>
+  <p>
+	<strong>Beers:</strong>
+	<ul>
+	  <% style.beers.each do |beer| %>
+	  <li><%= link_to beer.name, beer %></li>
+	  <% end %>
+	</ul>
+  </p>
+  <% end %>
+
 </div>

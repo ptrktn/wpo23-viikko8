@@ -13,11 +13,15 @@
 	Number of beers: <%= @brewery.beers.count %>
   </p>
 
+  <% if brewery.beers.count.positive? %>
   <p>
- <% brewery.beers.each do |beer| %>
-   <%= link_to beer.name, beer %>
- <% end %>
- </p>
-
+	<strong>Beers:</strong>
+	<ul>
+	  <% brewery.beers.each do |beer| %>
+	  <li><%= link_to beer.name, beer %></li>
+	  <% end %>
+	</ul>
+  </p>
+  <% end %>
 
 </div>
