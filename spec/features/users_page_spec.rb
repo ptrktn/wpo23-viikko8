@@ -64,7 +64,7 @@ describe "User" do
     end
 
     it "shows user's favorite beer style" do
-      create_beer_with_rating({ user: @user, style: 'Watery' }, 10)
+      create_beer_with_rating({ user: @user, style: FactoryBot.create(:style, name: 'Watery') }, 10)
 
       visit user_path(@user)
 

@@ -5,6 +5,7 @@ describe "Rating" do
 
   let!(:brewery) { FactoryBot.create :brewery, name: "Koff" }
   let!(:user) { FactoryBot.create :user }
+  let!(:style) { FactoryBot.create :style, name: 'Lager' }
 
   before :each do
     sign_in(username: "Pekka", password: "Foobar1")
@@ -12,9 +13,8 @@ describe "Rating" do
 
   it "creates a new beer when a name is given" do
     visit new_beer_path
-
     select('Koff', from: 'beer[brewery_id]')
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
     fill_in('beer[name]', with: 'I')
 
     expect{
@@ -26,7 +26,7 @@ describe "Rating" do
     visit new_beer_path
 
     select('Koff', from: 'beer[brewery_id]')
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
 
     expect { click_button "Create Beer" }.not_to(change { Beer.count })
 

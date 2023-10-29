@@ -65,7 +65,7 @@ class BeersController < ApplicationController
 
   def set_breweries_and_styles_for_template
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
+    @styles = Style.all
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -75,6 +75,6 @@ class BeersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def beer_params
-    params.require(:beer).permit(:name, :style, :brewery_id)
+    params.require(:beer).permit(:name, :style_id, :brewery_id)
   end
 end

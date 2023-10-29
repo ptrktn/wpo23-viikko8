@@ -19,7 +19,7 @@
   </div>
 
   <div>
-	<%= form.select :style, options_for_select(@styles) %>
+	<%= form.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected: @beer.style_id) %>
   </div>
 
   <div>

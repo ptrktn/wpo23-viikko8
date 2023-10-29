@@ -30,11 +30,11 @@ class User < ApplicationRecord
 
     sql = ActiveRecord::Base.sanitize_sql_for_conditions(
       [
-        'select style from ( ' \
-        'select beers.style as style, avg(ratings.score) as avg_rating from ratings ' \
+        'select name from styles where id = (select style_id from ( ' \
+        'select beers.style_id as style_id, avg(ratings.score) as avg_rating from ratings ' \
         'inner join beers on ratings.beer_id = beers.id ' \
         'where ratings.user_id = :user_id ' \
-        'group by 1 order by 2 desc limit 1) x', { user_id: id }
+        'group by 1 order by 2 desc limit 1) x )', { user_id: id }
       ]
     )
     result = ActiveRecord::Base.connection.execute(sql).first.flatten.to_a

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
   let(:name) { "Happy Cat" }
-  let(:style) { "Lager" }
+  let(:style) { FactoryBot.create(:style) }
   let(:brewery) { Brewery.create(name: "Brew Cat", year: 2001) }
 
   describe "with valid arguments" do

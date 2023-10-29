@@ -10,7 +10,7 @@ module Helpers
     beer = FactoryBot.create(
       :beer,
       brewery: object[:brewery] || FactoryBot.create(:brewery),
-      style: object[:style] || "Lager"
+      style: object[:style] || FactoryBot.create(:style)
     )
     FactoryBot.create(:rating, beer:, score:, user: object[:user])
     beer

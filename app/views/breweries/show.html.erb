@@ -7,7 +7,7 @@
   Brewery has
   <%= pluralize(@brewery.ratings.count, 'rating') %>
   with an average of
-  <%= @brewery.average_rating %>
+  <%= sprintf("%.2f", @brewery.average_rating) %>
   <% end %>
 </p>
 
