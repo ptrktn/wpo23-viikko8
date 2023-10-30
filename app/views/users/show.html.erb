@@ -25,7 +25,14 @@
 <p>
 <% if @user.ratings.empty? %>
  <p>User has not rated any beers</p>
-<% else %>
+ <% else %>
+   <p>
+	User's favorite style is <%= @user.favorite_style %>
+  </p>
+  <p>
+	User's favorite brewery is <%= @user.favorite_brewery %>
+  </p>
+
  <p>
  User has made
  <%= pluralize(@user.ratings.count, 'rating') %>
@@ -37,37 +44,27 @@
    <strong>Ratings</strong>
  </p>
 
- <ul>
+ <ul class="list-group">
    <% @user.ratings.each do |rating| %>
-   <li>
+   <li class="list-group-item d-flex justify-content-between align-items-center">
 	 <%= render rating %>
      <% if @user == current_user %>
 	   <%= link_to("delete",
 	     rating_path(rating.id),
-           data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }) %>
-	 <% end %>
-   </li>
+           data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-danger') %>
+	   <% end %>
+	   </li>
    <% end %>
  </ul>
 
-  <p>
-	User's favorite style is <%= @user.favorite_style %>
-  </p>
-  <p>
-	User's favorite brewery is <%= @user.favorite_brewery %>
-  </p>
   <% end %>
 </p>
 
-
-
-
 <div>
   <% if @user == current_user %>
-    <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <p><%= link_to "Edit this user", edit_user_path(@user), class: 'btn btn-primary' %></p>
+  <p><%= button_to "Destroy this user", @user, method: :delete, class: 'btn btn-danger' %></p>
   <% end %>
+
   <%= link_to "Back to users", users_path %>
-  <% if @user == current_user %>
-    <%= button_to "Destroy this user", @user, method: :delete %>
-  <% end %>
 </div>
