@@ -11,18 +11,22 @@
     </div>
   <% end %>
 
-  <%= form.select :brewery_id, options_from_collection_for_select(@breweries, :id, :to_s, selected: @beer.brewery_id) %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+	<%= form.label :brewery, style: "display: block", class: "form-label" %>
+	<%= form.select :brewery_id, options_from_collection_for_select(@breweries, :id, :to_s, selected: @beer.brewery_id), {}, { :class => "form-select" } %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :name, style: "display: block", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div>
-	<%= form.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected: @beer.style_id) %>
+  <div class="mb-3">
+	<%= form.label :style, style: "display: block", class: "form-label" %>
+	<%= form.select :style_id, options_from_collection_for_select(@styles, :id, :to_s, selected: @beer.style_id), {}, { :class => "form-select" } %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit "Create Beer", class: "btn btn-primary" %>
   </div>
 <% end %>
