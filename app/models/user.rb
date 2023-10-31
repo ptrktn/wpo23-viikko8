@@ -56,4 +56,16 @@ class User < ApplicationRecord
     result = ActiveRecord::Base.connection.execute(sql).first.flatten.to_a
     result[1]
   end
+
+  def self.top(limit = 3)
+    sql = ActiveRecord::Base.sanitize_sql_for_conditions(
+      [
+        'select id from ( ' \
+        'select users.id as id, count(*) as ratings from ratings ' \
+        'inner join users on ratings.user_id = users.id ' \
+        'group by 1 order by 2 desc limit :limit) x', { limit: }
+      ]
+    )
+    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| User.find k['id'] }
+  end
 end

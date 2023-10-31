@@ -10,6 +10,18 @@ class Beer < ApplicationRecord
   validates :style, presence: true
 
   def to_s
-    "#{brewery.name} #{name}"
+    name
+  end
+
+  def self.top(limit = 3)
+    sql = ActiveRecord::Base.sanitize_sql_for_conditions(
+      [
+        'select id from ( ' \
+        'select beers.id as id, avg(ratings.score) as average from ratings ' \
+        'inner join beers on ratings.beer_id = beers.id ' \
+        'group by 1 order by 2 desc limit :limit) x', { limit: }
+      ]
+    )
+    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| Beer.find k['id'] }
   end
 end

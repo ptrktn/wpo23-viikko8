@@ -1,6 +1,11 @@
 <div id="<%= dom_id brewery %>">
   <p>
-    <h2> <%= link_to brewery.name, brewery %> </h2>
+    <h2>
+	  <%= link_to brewery.name, brewery %>
+	  <% if not brewery.active  %>
+      <span class="badge bg-secondary">retired</span>
+	  <% end %>
+	</h2>
   </p>
 
   <p>
@@ -10,7 +15,7 @@
   </p>
 
   <p>
-	Number of beers: <%= @brewery.beers.count %>
+	Number of beers: <%= brewery.beers.count %>
   </p>
 
   <% if brewery.beers.count.positive? %>
