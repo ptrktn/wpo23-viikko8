@@ -28,5 +28,9 @@
 </ul>
 
 <p>
+  Total ratings: <%= Rating.all.count %>
+</p>
+
+<p>
   <%= link_to "New rating", new_rating_path, class: 'btn btn-primary' if current_user %>
 </p>
