@@ -22,6 +22,6 @@ class Beer < ApplicationRecord
         'group by 1 order by 2 desc limit :limit) x', { limit: }
       ]
     )
-    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| Beer.find k['id'] }
+    ActiveRecord::Base.connection.execute(sql).to_a.map { |k| Beer.find k['id'] }
   end
 end

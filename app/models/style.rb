@@ -15,7 +15,7 @@ class Style < ApplicationRecord
         'group by 1 order by 2 desc limit :limit) x', { limit: }
       ]
     )
-    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| Style.find k['id'] }
+    ActiveRecord::Base.connection.execute(sql).to_a.map { |k| Style.find k['id'] }
   end
 
   def average_rating
@@ -28,6 +28,6 @@ class Style < ApplicationRecord
         'where styles.id = :style_id) x', { style_id: id }
       ]
     )
-    ActiveRecord::Base.connection.execute(sql).flatten.to_a.first['average']
+    ActiveRecord::Base.connection.execute(sql).to_a.first['average']
   end
 end

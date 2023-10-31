@@ -33,6 +33,6 @@ class Brewery < ApplicationRecord
         'group by 1 order by 2 desc limit :limit) x', { limit: }
       ]
     )
-    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| Brewery.find k['id'] }
+    ActiveRecord::Base.connection.execute(sql).to_a.map { |k| Brewery.find k['id'] }
   end
 end
