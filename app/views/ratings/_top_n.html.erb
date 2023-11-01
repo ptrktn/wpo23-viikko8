@@ -2,7 +2,7 @@
 <ul>
   <% objects.each do |object| %>
   <li>
-	<%= object.to_s %> <%= sprintf('%.2f', object.average_rating) %>
+	<%= object.to_s %> <%= round(object.average_rating) %>
   </li>
   <% end %>
 </ul>

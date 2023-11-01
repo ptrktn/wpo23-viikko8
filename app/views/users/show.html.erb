@@ -37,7 +37,7 @@
  User has made
  <%= pluralize(@user.ratings.count, 'rating') %>
  average rating
- <%= sprintf("%.2f", @user.average_rating) %>
+ <%= round(@user.average_rating) %>
  </p>
 
  <p>

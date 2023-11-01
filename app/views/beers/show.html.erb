@@ -6,7 +6,7 @@
  Beer has
  <%= pluralize(@beer.ratings.count, 'rating') %>
  with an average of
- <%= sprintf("%.2f", @beer.average_rating) %>
+ <%= round(@beer.average_rating) %>
 <% end %>
 
 <% if current_user %>

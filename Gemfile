@@ -80,6 +80,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'rubocop'
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 gem 'bcrypt', '~> 3.1.7'
