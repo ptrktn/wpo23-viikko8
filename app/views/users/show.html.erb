@@ -3,6 +3,16 @@
   <%= @user.username %>
 </p>
 
+<p>
+  <% if admin_user %>
+  <% if @user.disabled %>
+  <%= link_to "Enable this user", toggle_enabled_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-primary" %>
+  <% else %>
+    <%= link_to "Disable this user", toggle_enabled_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %>
+      <% end %>
+	  
+  <% end %>
+</p>
 
 <p>
 <% if @user.beer_clubs.empty? %>
@@ -20,7 +30,6 @@
   </ul>
 <% end %>
 </p>
-
 
 <p>
 <% if @user.ratings.empty? %>

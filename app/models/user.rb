@@ -66,6 +66,9 @@ class User < ApplicationRecord
         'group by 1 order by 2 desc limit :limit) x', { limit: }
       ]
     )
-    ActiveRecord::Base.connection.execute(sql).flatten.to_a.map { |k| User.find k['id'] }
+    result = ActiveRecord::Base.connection.execute(sql)
+    return [] if result.count == 0
+
+    result.flatten.to_a.map { |k| User.find k['id'] }
   end
 end

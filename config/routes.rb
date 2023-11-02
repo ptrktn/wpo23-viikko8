@@ -23,4 +23,8 @@ Rails.application.routes.draw do
   resources :breweries do
     post 'toggle_activity', on: :member
   end
+
+  resources :users do
+    post 'toggle_enabled', on: :member
+  end
 end
