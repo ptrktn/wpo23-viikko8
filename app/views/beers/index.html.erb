@@ -1,14 +1,13 @@
 <h1>Beers</h1>
 
 <div id="beers">
-
   <table class="table table-hover">
     <thead>
       <tr>
-		<th scope="col">Beer</th>
-		<th scope="col">Style</th>
-		<th scope="col">Brewery</th>
-		<th scope="col">Rating</th>
+		<th><%= link_to "Name", beers_path(order: "name")%></th>
+		<th><%= link_to "Style", beers_path(order: "style")%></th>
+		<th><%= link_to "Brewery", beers_path(order: "brewery")%></th>
+		<th><%= link_to "Rating", beers_path(order: "rating")%></th>
       </tr>
 	</thead>
 	<tbody>

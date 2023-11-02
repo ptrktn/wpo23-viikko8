@@ -6,7 +6,15 @@ class BeersController < ApplicationController
 
   # GET /beers or /beers.json
   def index
-    @beers = Beer.all
+    order = params[:order] || 'name'
+
+    @beers =
+      case order
+      when "name" then Beer.order(:name)
+      when "brewery" then Beer.includes(:brewery).order("breweries.name")
+      when "style" then Beer.includes(:style).order("styles.name")
+      when "rating" then Beer.all.sort_by(&:average_rating).reverse
+      end
   end
 
   # GET /beers/1 or /beers/1.json
