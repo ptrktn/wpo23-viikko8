@@ -27,4 +27,7 @@ Rails.application.routes.draw do
   resources :users do
     post 'toggle_enabled', on: :member
   end
+
+  get 'beerlist', to: 'beers#list'
+  get 'brewerylist', to: 'breweries#list'
 end

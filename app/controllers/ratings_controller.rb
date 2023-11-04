@@ -1,6 +1,7 @@
 class RatingsController < ApplicationController
   # GET /ratings or /ratingss.json
   def index
+    @ratings = Rating.all
     @top_beers = Beer.top 3
     @top_breweries = Brewery.top 3
     @top_styles = Style.top 3

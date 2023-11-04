@@ -6,7 +6,6 @@
 #
 default: &default
   adapter: sqlite3
-  database: ratebeer
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -24,5 +23,5 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  url: <%= ENV.fetch("DATABASE_URL") %>
+  url: <%= ENV.fetch("DATABASE_URL", nil) %>
 

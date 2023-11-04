@@ -23,6 +23,10 @@ class Brewery < ApplicationRecord
     errors.add(:year, "brewery year is in future") if year > Date.current.year
   end
 
+  def number_of_beers
+    beers.count
+  end
+
   def self.top(limit = 3)
     sql = ActiveRecord::Base.sanitize_sql_for_conditions(
       [

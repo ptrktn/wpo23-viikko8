@@ -68,6 +68,9 @@ class BreweriesController < ApplicationController
     redirect_to brewery, notice: "brewery activity status changed to #{new_status}"
   end
 
+  def list
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
