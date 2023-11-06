@@ -2,15 +2,16 @@ require 'rails_helper'
 
 describe "Beerlist page" do
   before :all do
-    Capybara.register_driver :selenium do |app|
+    Capybara.register_driver :chrome do |app|
       Capybara::Selenium::Driver.new(
         app,
-        browser: :firefox,
-        options: Selenium::WebDriver::Firefox::Options.new(args: ['--headless'])
+        browser: :chrome,
+        options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
       )
     end
 
-    WebMock.allow_net_connect!
+    Capybara.javascript_driver = :chrome
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 
   before :each do
@@ -27,6 +28,7 @@ describe "Beerlist page" do
 
   it "shows one known beer", js: true do
     visit beerlist_path
+
     expect(page).to have_content "Nikolai"
   end
 
@@ -40,5 +42,37 @@ describe "Beerlist page" do
     end
 
     expect(names).to eq(["Fastenbier", "Lechte Weisse", "Nikolai"])
+  end
+
+  it 'sorts beer list by style', js: true do
+    visit beerlist_path
+
+    within('#beertable') do
+      find('#style').click
+    end
+
+    styles = []
+
+    find('#beertable').all('.tablerow').each do |tr|
+      styles.append(tr.all('td').map(&:text)[1])
+    end
+
+    expect(styles).to eq(%w(Lager Rauchbier Weizen))
+  end
+
+  it 'sorts beer list by breweries', js: true do
+    visit beerlist_path
+
+    within('#beertable') do
+      find('#brewery').click
+    end
+
+    breweries = []
+
+    find('#beertable').all('.tablerow').each do |tr|
+      breweries.append(tr.all('td').map(&:text)[2])
+    end
+
+    expect(breweries).to eq(%w(Ayinger Koff Schlenkerla))
   end
 end
