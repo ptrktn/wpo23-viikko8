@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: %i[show edit update destroy]
+  before_action :set_membership, only: %i[show edit update destroy confirm]
 
   # GET /memberships or /memberships.json
   def index
@@ -61,6 +61,18 @@ class MembershipsController < ApplicationController
       format.html { redirect_to user_url(user), notice: "Membership in #{beer_club_name} ended." }
       format.json { head :no_content }
     end
+  end
+
+  def confirm
+    notice =
+      if Membership.find_by(beer_club_id: @membership.beer_club_id, user_id: current_user, confirmed: true)
+        @membership.update(confirmed: true)
+        "User #{User.find_by(id: @membership.user_id).username} is now a confirmed member of #{BeerClub.find_by(id: @membership.beer_club_id).name}"
+      else
+        "Only members can confirm users"
+      end
+
+    redirect_to beer_club_url(@membership.beer_club_id), notice:
   end
 
   private

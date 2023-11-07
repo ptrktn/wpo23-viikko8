@@ -1,20 +1,36 @@
 <%= render @beer_club %>
 
 <p>
-<% if @beer_club.members.empty? %>
- No members in this club yet
-<% else %>
- This club has
- <%= pluralize(@beer_club.members.count, 'member') %>
+  <% if @beer_club.members.empty? %>
+    No members in this club yet
+  <% else %>
+    This club has <%= pluralize(@beer_club.members.count, 'member') %>
 
-  <p><strong>Members:</strong></p>
+  <p><strong>Members</strong></p>
 
   <ul>
 	<% @beer_club.members.each do |user| %>
 	  <li><%= link_to user.username, user %></li>
 	<% end %>
   </ul>
-<% end %>
+
+  <% if @membership_applications.count.positive? %>
+  
+    <p><strong>Membership Applications</strong></p>
+
+	<ul>
+	  <% @membership_applications.each do |user| %>
+	  <li>
+		<%= link_to user.username, user %>
+		<%= form_with(url: confirm_membership_path(user.memberships.find_by(beer_club: @beer_club, confirmed: [false, nil]).id)) do |form| %>
+		<%= form.submit "Confirm", class: "btn btn-primary" %>
+		<% end %>
+	  </li>
+	  <% end %>
+	</ul>
+  <% end %>
+  
+  <% end %>
 </p>
 
 

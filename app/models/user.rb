@@ -12,7 +12,11 @@ class User < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
-  has_many :beer_clubs, through: :memberships
+  has_many :beer_clubs, through: :memberships do
+    def confirmed
+      where("memberships.confirmed = ?", true)
+    end
+  end
 
   def password_special_characters
     errors.add(:password, 'must contain at least one uppercase character') unless password&.match(/[A-Z]+/)

@@ -15,16 +15,16 @@
 </p>
 
 <p>
-<% if @user.beer_clubs.empty? %>
+<% if @user.beer_clubs.confirmed.empty? %>
  Not a member of any beer club
 <% else %>
  Belongs to
- <%= pluralize(@user.beer_clubs.count, 'club') %>
+ <%= pluralize(@user.beer_clubs.confirmed.count, 'club') %>
 
-  <p><strong>Memberhips:</strong></p>
+  <p><strong>Memberhips</strong></p>
 
   <ul>
-	<% @user.beer_clubs.each do |beer_club| %>
+	<% @user.beer_clubs.confirmed.each do |beer_club| %>
 	<li><%= link_to beer_club.name, beer_club %></li>
 	<% end %>
   </ul>

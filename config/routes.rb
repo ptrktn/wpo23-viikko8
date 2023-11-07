@@ -28,6 +28,10 @@ Rails.application.routes.draw do
     post 'toggle_enabled', on: :member
   end
 
+  resources :memberships do
+    post 'confirm', on: :member
+  end
+
   get 'beerlist', to: 'beers#list'
   get 'brewerylist', to: 'breweries#list'
 end
