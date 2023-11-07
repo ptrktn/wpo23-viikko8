@@ -82,7 +82,7 @@ class BeerClubsController < ApplicationController
 
   def set_membership_applications
     @membership_applications =
-      if Membership.find_by(beer_club: @beer_club, user: current_user)
+      if Membership.find_by(beer_club: @beer_club, user: current_user, confirmed: true)
         User
           .where(id: Membership.where(beer_club_id: 3, confirmed: [nil, false]).pluck(:user_id))
       else

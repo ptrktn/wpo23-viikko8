@@ -4,12 +4,12 @@
   <% if @beer_club.members.empty? %>
     No members in this club yet
   <% else %>
-    This club has <%= pluralize(@beer_club.members.count, 'member') %>
+    This club has <%= pluralize(@beer_club.members.confirmed.count, 'member') %>
 
   <p><strong>Members</strong></p>
 
   <ul>
-	<% @beer_club.members.each do |user| %>
+	<% @beer_club.members.confirmed.each do |user| %>
 	  <li><%= link_to user.username, user %></li>
 	<% end %>
   </ul>
