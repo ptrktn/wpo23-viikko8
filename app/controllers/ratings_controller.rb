@@ -19,6 +19,7 @@ class RatingsController < ApplicationController
     @rating.user = current_user
 
     if @rating.save
+      expire_fragment("brewerylist")
       redirect_to user_path current_user
     else
       @beers = Beer.all
@@ -27,6 +28,7 @@ class RatingsController < ApplicationController
   end
 
   def destroy
+    expire_fragment("brewerylist")
     rating = Rating.find params[:id]
     rating.delete if current_user == rating.user
     redirect_to user_path(current_user)

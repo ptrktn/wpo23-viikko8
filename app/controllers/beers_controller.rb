@@ -3,13 +3,16 @@ class BeersController < ApplicationController
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_admin_user, only: %i[destroy]
+  before_action :clear_cache_fragments, only: %i[create edit update destroy]
 
   # GET /beers or /beers.json
   def index
-    order = params[:order] || 'name'
+    @order = params[:order] || 'name'
+
+    return if request.format.html? && fragment_exist?("beerlist-#{@order}")
 
     @beers =
-      case order
+      case @order
       when "name" then Beer.includes(:brewery, :style, :ratings).order(:name)
       when "brewery" then Beer.includes(:brewery, :style, :ratings).order("breweries.name")
       when "style" then Beer.includes(:brewery, :style, :ratings).order("styles.name")
@@ -88,5 +91,9 @@ class BeersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def beer_params
     params.require(:beer).permit(:name, :style_id, :brewery_id)
+  end
+
+  def clear_cache_fragments
+    %w(beerlist-name beerlist-brewery beerlist-style brewerylist).each{ |f| expire_fragment(f) }
   end
 end
