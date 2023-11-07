@@ -2,11 +2,14 @@
 
 <div id="users">
   <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+  <p>
+    <%= link_to(user.username, user) %>
+  <p>Has made <%= "#{user.ratings.size}"%> ratings, average rating <%= "#{user.average_rating}" %></p>
+	<% if admin_user && user.disabled %>
+	<span class="badge bg-secondary">Disabled</span>
+	<% end %>
+  </p>
   <% end %>
 </div>
 
-<%= link_to "New user", new_user_path %>
+<%= link_to "New user", new_user_path, class: 'btn btn-primary'%>

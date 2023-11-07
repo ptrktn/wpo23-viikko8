@@ -10,10 +10,10 @@ class BeersController < ApplicationController
 
     @beers =
       case order
-      when "name" then Beer.order(:name)
-      when "brewery" then Beer.includes(:brewery).order("breweries.name")
-      when "style" then Beer.includes(:style).order("styles.name")
-      when "rating" then Beer.all.sort_by(&:average_rating).reverse
+      when "name" then Beer.includes(:brewery, :style, :ratings).order(:name)
+      when "brewery" then Beer.includes(:brewery, :style, :ratings).order("breweries.name")
+      when "style" then Beer.includes(:brewery, :style, :ratings).order("styles.name")
+      when "rating" then Beer.includes(:brewery, :style, :ratings).all.sort_by(&:average_rating).reverse
       end
   end
 
