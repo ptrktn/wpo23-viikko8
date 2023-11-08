@@ -1,4 +1,47 @@
-<%= render @brewery %>
+<% cache @brewery do %>
+
+<div id="<%= dom_id @brewery %>">
+
+  <p>
+    <h2>
+	  <%= @brewery.name %>
+	  <%= @brewery.cache_key_with_version %>
+	  <% if not @brewery.active  %>
+      <span class="badge bg-secondary">retired</span>
+	  <% end %>
+	</h2>
+  </p>
+
+  <p><i>Established in<%= @brewery.year %></i></p>
+
+  <p>Number of beers: <%= @brewery.beers.count %></p>
+
+  <% if @brewery.beers.count.positive? %>
+  <p>
+	<strong>Beers</strong>
+  <div id="brewery-beers">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Style</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @brewery.beers.each do |beer| %>
+          <tr>
+            <td><%= link_to beer.name, beer %></td>
+            <td><%= link_to beer.style.name, beer.style %></td>
+            <td><%= round(beer.average_rating) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  </p>
+  <% end %>
 
 <p>
   <% if @brewery.ratings.present? %>
@@ -8,6 +51,10 @@
   <%= round(@brewery.average_rating) %>
   <% end %>
 </p>
+
+</div>
+
+<% end %>
 
 <div>
   <p><%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), data: {turbo_method: "post"}, class: "btn btn-primary" %></p>
