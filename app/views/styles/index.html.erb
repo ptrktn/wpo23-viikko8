@@ -1,12 +1,25 @@
 <h1>Styles</h1>
 
 <div id="styles">
-  <% @styles.each do |style| %>
-    <%= render style %>
-    <p>
-      <%= link_to "Show this style", style %>
-    </p>
-  <% end %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+		<th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @styles.each do |style| %>
+        <tr>
+          <td><%= link_to style.name, style %></td>
+          <td><%= style.description %></td>
+          <td><%= round(style.average_rating) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
+
 
 <%= link_to "New style", new_style_path, class: 'btn btn-primary' if current_user %>
