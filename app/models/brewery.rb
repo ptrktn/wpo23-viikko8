@@ -1,4 +1,5 @@
 class Brewery < ApplicationRecord
+  extend TopMethod
   include RatingAverage
 
   has_many :beers, dependent: :destroy
@@ -25,18 +26,5 @@ class Brewery < ApplicationRecord
 
   def number_of_beers
     beers.count
-  end
-
-  def self.top(limit = 3)
-    sql = ActiveRecord::Base.sanitize_sql_for_conditions(
-      [
-        'select id from ( ' \
-        'select breweries.id as id, avg(ratings.score) as average from ratings ' \
-        'inner join beers on ratings.beer_id = beers.id ' \
-        'inner join breweries on beers.brewery_id = breweries.id ' \
-        'group by 1 order by 2 desc limit :limit) x', { limit: }
-      ]
-    )
-    ActiveRecord::Base.connection.execute(sql).to_a.map { |k| Brewery.find k['id'] }
   end
 end
