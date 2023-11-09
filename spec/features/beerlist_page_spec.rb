@@ -11,8 +11,12 @@ describe "Beerlist page" do
     end
 
     Capybara.javascript_driver = :chrome
-    Webdrivers::Chromedriver.required_version = Webdrivers::Chromedriver.current_version
-    WebMock.disable_net_connect!(allow_localhost: true)
+
+    # Avoid issues due to Chrome checking for updates
+    WebMock.allow_net_connect!
+
+    # TODO: net access should be disabled less localhost
+    # WebMock.disable_net_connect!(allow_localhost: true)
   end
 
   before :each do

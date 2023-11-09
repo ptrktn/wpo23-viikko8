@@ -23,15 +23,12 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
-    stub_request(:get, "https://googlechromelabs.github.io/chrome-for-testing/latest-patch-versions-per-build.json")
-      .to_return(status: 404)
-    stub_request(:get, "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-      .to_return(status: 404)
   end
 
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
