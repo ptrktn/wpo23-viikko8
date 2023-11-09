@@ -1,18 +1,17 @@
-<% cache @brewery do %>
+<% cache @brewery, skip_digest: true do %>
 
 <div id="<%= dom_id @brewery %>">
 
   <p>
     <h2>
 	  <%= @brewery.name %>
-	  <%= @brewery.cache_key_with_version %>
 	  <% if not @brewery.active  %>
       <span class="badge bg-secondary">retired</span>
 	  <% end %>
 	</h2>
   </p>
 
-  <p><i>Established in<%= @brewery.year %></i></p>
+  <p><i>Established in <%= @brewery.year %></i></p>
 
   <p>Number of beers: <%= @brewery.beers.count %></p>
 

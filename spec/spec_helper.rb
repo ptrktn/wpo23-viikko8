@@ -23,6 +23,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+    stub_request(:get, "https://googlechromelabs.github.io/chrome-for-testing/latest-patch-versions-per-build.json")
+      .to_return(status: 404)
+    stub_request(:get, "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+      .to_return(status: 404)
   end
 
   config.after(:each) do

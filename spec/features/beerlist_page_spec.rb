@@ -12,13 +12,7 @@ describe "Beerlist page" do
 
     Capybara.javascript_driver = :chrome
 
-    if ENV.fetch('GITHUB_RUN_NUMBER', nil)
-      # TODO: Chromium in GitHub actions tries to access many sites - use Selenium?
-      WebMock.allow_net_connect!
-    else
-      # This works just fine in local Debian env
-      WebMock.disable_net_connect!(allow_localhost: true)
-    end
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 
   before :each do
