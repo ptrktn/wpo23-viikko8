@@ -56,16 +56,20 @@
  <ul class="list-group">
    <% @user.ratings.each do |rating| %>
    <li class="list-group-item d-flex justify-content-between align-items-center">
-	 <%= render rating %>
+	 <%= link_to rating, rating, data: { turbo_frame: "rating_details" } %>
      <% if @user == current_user %>
 	   <%= link_to("delete",
 	     rating_path(rating.id),
            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-danger') %>
 	   <% end %>
-	   </li>
+   </li>
    <% end %>
+   
  </ul>
 
+  <%= turbo_frame_tag "rating_details" do %>
+  <% end %>
+  
   <% end %>
 </p>
 

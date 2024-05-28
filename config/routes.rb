@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :styles
+  # resources :styles
+  resources :styles do
+    get 'about', on: :collection
+  end
   resources :memberships
   resources :beer_clubs
   resources :users
@@ -10,7 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'breweries#index'
 
-  resources :ratings, only: [:index, :new, :create, :destroy]
+  resources :ratings, only: [:index, :new, :create, :destroy, :show]
   resource :session, only: [:new, :create, :destroy]
 
   get 'signup', to: 'users#new'

@@ -1,7 +1,5 @@
 <h1>Listing breweries</h1>
 
-<% cache "brewerylist", skip_digest: true do %>
-
 <p> Number of active breweries: <%= @active_breweries.count %> </p>
 
 <div id="active_breweries">
@@ -26,7 +24,5 @@
     </tbody>
   </table>
 </div>
-
-<% end %>
 
 <%= link_to("New brewery", new_brewery_path, class: "btn btn-primary") if current_user %>
