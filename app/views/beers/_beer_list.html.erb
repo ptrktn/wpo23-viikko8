@@ -1,6 +1,4 @@
-<h1>Beers</h1>
-
-  <div id="beers">
+<%= turbo_frame_tag "beer_list_frame" do %>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -33,6 +31,4 @@
 		</tr>
       </tbody>
     </table>
-  </div>
-
-<%= link_to("New beer", new_beer_path, class: "btn btn-primary") if current_user %>
+<% end %>

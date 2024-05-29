@@ -1,4 +1,6 @@
 class BeersController < ApplicationController
+  PAGE_SIZE = 20
+
   before_action :set_beer, only: %i[show edit update destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
@@ -7,13 +9,41 @@ class BeersController < ApplicationController
   # GET /beers or /beers.json
   def index
     @order = params[:order] || 'name'
+    @page = params[:page]&.to_i || 1
+    @last_page = (Beer.count / PAGE_SIZE).ceil
+    offset = (@page - 1) * PAGE_SIZE
 
     @beers =
       case @order
-      when "name" then Beer.includes(:brewery, :style, :ratings).order(:name)
-      when "brewery" then Beer.includes(:brewery, :style, :ratings).order("breweries.name")
-      when "style" then Beer.includes(:brewery, :style, :ratings).order("styles.name")
-      when "rating" then Beer.includes(:brewery, :style, :ratings).all.sort_by(&:average_rating).reverse
+      when "name"
+        Beer
+      .includes(:brewery, :style, :ratings)
+      .order(:name)
+      .limit(PAGE_SIZE)
+      .offset(offset)
+      when "brewery"
+        Beer
+      .includes(:brewery, :style, :ratings)
+      .joins(:brewery)
+      .order("breweries.name")
+      .limit(PAGE_SIZE)
+      .offset(offset)
+      when "style"
+        Beer
+      .includes(:brewery, :style, :ratings)
+      .joins(:style)
+      .order("styles.name")
+      .limit(PAGE_SIZE)
+      .offset(offset)
+      else
+        # rating
+        Beer
+      .left_joins(:ratings)
+      .select("beers.*, avg(ratings.score)")
+      .group("beers.id")
+      .order("avg(ratings.score) DESC")
+      .limit(PAGE_SIZE)
+      .offset(offset)
       end
   end
 

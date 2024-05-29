@@ -16,13 +16,28 @@
  <% end %>
 </ul>
 
-<h4>Recent ratings</h4>
+<h4>Ratings</h4>
+
+<% if @order == 'desc' %>
+<%= link_to "oldest first", ratings_path(page: 1, order: 'asc') %>
+<% else %>
+<%= link_to "newest first", ratings_path(page: 1, order: 'desc') %>
+<% end %>
+
+<% unless @page == 1 %>
+<%= link_to "<<< Previous page", ratings_path(page: @page - 1, order: @order) %>
+<% end %>
+<% unless @page == @last_page %>
+<%= link_to "Next page >>>", ratings_path(page: @page + 1, order: @order) %>
+<% end %>
+
 <ul>
  <% @recent.each do |rating| %>
  <li>
-   <%= render rating %>
-   <%= link_to rating.user.username, rating.user %>
-   <%= rating.created_at %>
+   <%= rating.beer.name %>
+   got <%= rating.score %> <%= 'point'.pluralize(rating.score) %>
+   from <%= link_to rating.user.username, rating.user %>
+   on <%= rating.created_at %>
  </li>
  <% end %>
 </ul>
