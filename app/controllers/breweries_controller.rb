@@ -4,8 +4,6 @@ class BreweriesController < ApplicationController
 
   # GET /breweries or /breweries.json
   def index
-    @active_breweries = Brewery.active
-    @retired_breweries = Brewery.retired
   end
 
   # GET /breweries/1 or /breweries/1.json
@@ -69,6 +67,21 @@ class BreweriesController < ApplicationController
   end
 
   def list
+  end
+
+  def active
+    render partial: 'brewery_list', locals: {
+      tag: 'active',
+      breweries: Brewery.active.order(:name)
+    }
+  end
+
+  def retired
+    @retired_breweries =
+      render partial: 'brewery_list', locals: {
+        tag: 'retired',
+        breweries: Brewery.retired.order(:name)
+      }
   end
 
   private

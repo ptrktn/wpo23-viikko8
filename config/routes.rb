@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # resources :styles
   resources :styles do
     get 'about', on: :collection
   end
@@ -7,7 +6,7 @@ Rails.application.routes.draw do
   resources :beer_clubs
   resources :users
   resources :beers
-  resources :breweries
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -23,12 +22,15 @@ Rails.application.routes.draw do
   resources :places, only: [:index, :show]
   post 'places', to: 'places#search'
 
+  get 'breweries/active', to: 'breweries#active'
+  get 'breweries/retired', to: 'breweries#retired'
   resources :breweries do
     post 'toggle_activity', on: :member
   end
 
   resources :users do
     post 'toggle_enabled', on: :member
+    get 'recommendation', on: :member
   end
 
   resources :memberships do

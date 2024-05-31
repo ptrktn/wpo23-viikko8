@@ -10,7 +10,7 @@ class BeersController < ApplicationController
   def index
     @order = params[:order] || 'name'
     @page = params[:page]&.to_i || 1
-    @last_page = (Beer.count / PAGE_SIZE).ceil
+    @last_page = (Beer.count / PAGE_SIZE.to_f).ceil
     offset = (@page - 1) * PAGE_SIZE
 
     @beers =
@@ -45,6 +45,18 @@ class BeersController < ApplicationController
       .limit(PAGE_SIZE)
       .offset(offset)
       end
+
+    if turbo_frame_request?
+      render partial: "beer_list",
+             locals: {
+               beers: @beers,
+               page: @page,
+               order: @order,
+               last_page: @last_page
+             }
+    else
+      render :index
+    end
   end
 
   # GET /beers/1 or /beers/1.json

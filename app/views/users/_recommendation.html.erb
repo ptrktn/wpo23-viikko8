@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "beer_recommendation_tag" do %>
+
+    <p><%= link_to beer.name, beer %> by <%= link_to beer.brewery.name, beer.brewery %></p>
+
+<% end %>
+  

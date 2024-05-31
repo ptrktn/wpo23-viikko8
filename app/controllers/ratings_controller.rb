@@ -9,10 +9,9 @@ class RatingsController < ApplicationController
     @top_breweries = Rails.cache.fetch('top_breweries', expires_in: 1.hour) { Brewery.top 3 }
     @top_styles = Rails.cache.fetch('top_styles', expires_in: 1.hour) { Style.top 3 }
     @top_users = Rails.cache.fetch('top_users', expires_in: 1.hour) { User.top 3 }
-    # FIXME
     @order = params[:order] || 'desc'
     @page = params[:page]&.to_i || 1
-    @last_page = (Rating.count / PAGE_SIZE).ceil
+    @last_page = (Rating.count.to_f / PAGE_SIZE).ceil
     offset = (@page - 1) * PAGE_SIZE
 
     @recent =

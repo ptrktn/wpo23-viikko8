@@ -49,9 +49,18 @@
  <%= round(@user.average_rating) %>
  </p>
 
- <p>
-   <strong>Ratings</strong>
- </p>
+ <% if @user == current_user %>
+  <div>
+    <strong>Recommendation based on your ratings</strong>
+   <p><p>
+   <%= turbo_frame_tag "beer_recommendation_tag", src: recommendation_user_path do %>
+    <i>calculating the recommendation...</i>
+   <% end %>
+   </p></p>
+  </div>
+ <% end %>
+
+ <p><strong>Ratings</strong></p>
 
  <ul class="list-group">
    <% @user.ratings.each do |rating| %>
