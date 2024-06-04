@@ -13,6 +13,11 @@ class BreweriesController < ApplicationController
   # GET /breweries/new
   def new
     @brewery = Brewery.new
+    if turbo_frame_request?
+      render partial: "new"
+    else
+      render :new
+    end
   end
 
   # GET /breweries/1/edit
@@ -25,6 +30,10 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
+        format.turbo_stream {          
+          status = @brewery.active? ? "active" : "retired"
+          render turbo_stream: turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
+        }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
@@ -71,7 +80,7 @@ class BreweriesController < ApplicationController
 
   def active
     render partial: 'brewery_list', locals: {
-      tag: 'active',
+      status: 'active',
       breweries: Brewery.active.order(:name)
     }
   end
@@ -79,7 +88,7 @@ class BreweriesController < ApplicationController
   def retired
     @retired_breweries =
       render partial: 'brewery_list', locals: {
-        tag: 'retired',
+        status: 'retired',
         breweries: Brewery.retired.order(:name)
       }
   end

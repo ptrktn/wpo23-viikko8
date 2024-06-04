@@ -39,7 +39,9 @@
             <li class="nav-item">
               <%= link_to 'styles', styles_path , { class: "nav-link" } %>
             </li>
-            |
+			<li class="nav-item">
+              <%= link_to 'chat', chats_path , { class: "nav-link" } %>
+            </li>
             <% if current_user %>
 			<li class="nav-item dropdown">
 			  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,7 +89,7 @@
 		</div>
 		<div class="col-sm-4">
 		  <img
-			src="http://www.cs.helsinki.fi/u/mluukkai/wadror/pint.jpg"
+			src="/pint.jpg"
 			width="200"
 			style="padding-top:30px"
 			>

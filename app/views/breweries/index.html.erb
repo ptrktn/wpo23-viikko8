@@ -1,3 +1,5 @@
+<%= turbo_stream_from "breweries_index" %>
+
 <h1>Breweries</h1>
 
 <h3>Active breweries</h3>
@@ -16,4 +18,4 @@
   <% end %>
 </div>
 
-<%= link_to("New brewery", new_brewery_path, class: "btn btn-primary") if current_user %>
+<%= turbo_frame_tag "new_brewery", src: new_brewery_path if current_user %>

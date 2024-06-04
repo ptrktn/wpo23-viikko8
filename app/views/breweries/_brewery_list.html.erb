@@ -1,6 +1,6 @@
-<%= turbo_frame_tag "#{tag}_brewery_list_frame", data: { turbo_action: "advance" } do %>
+<%= turbo_frame_tag "#{status}_brewery_list_frame", data: { turbo_action: "advance" } do %>
 
-<p> Number of <%= tag %> breweries: <%= breweries.count %> </p>
+<p> Number of <%= status %> breweries: <%= breweries.count %> </p>
 
   <table class="table table-striped table-hover">
     <thead>
@@ -11,14 +11,9 @@
         <th>Rating</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="<%= status %>_brewery_rows">
       <% breweries.each do |brewery| %>
-        <tr>
-          <td><%= link_to brewery.name, brewery, data: { turbo_frame: "_top" } %></td>
-          <td><%= brewery.year %></td>
-          <td><%= brewery.beers.count %></td>
-          <td><%= round(brewery.average_rating) %></td>
-        </tr>
+	    <%= render "brewery_row", brewery: brewery %>
       <% end %>
     </tbody>
   </table>

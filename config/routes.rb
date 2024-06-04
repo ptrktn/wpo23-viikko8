@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   resources :styles do
     get 'about', on: :collection
   end

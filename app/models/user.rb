@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
+  has_many :chats, dependent: :destroy
   has_many :beer_clubs, through: :memberships do
     def confirmed
       where("memberships.confirmed = ?", true)

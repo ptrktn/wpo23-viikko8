@@ -1,0 +1,25 @@
+<%= turbo_stream_from "chats_index" %>
+
+<p style="color: green"><%= notice %></p>
+
+<h1>Beerchat</h1>
+
+<% if current_user %>
+
+<p>
+  <%= turbo_frame_tag "new_chat", src: new_chat_path %>
+</p>
+
+<div id="chats">
+  <%= turbo_frame_tag "chat_rows", data: { turbo_action: "advance" } do %>
+    <% @chats.each do |chat| %>
+      <%= render "chat_row", chat: chat  %>
+    <% end %>
+  <% end %>
+</div>
+
+<% else %>
+
+You need to login to use chat.
+
+<% end %>
