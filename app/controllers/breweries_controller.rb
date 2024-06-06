@@ -61,6 +61,9 @@ class BreweriesController < ApplicationController
     @brewery.destroy
 
     respond_to do |format|
+      format.turbo_stream {
+        nil
+      }
       format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
       format.json { head :no_content }
     end

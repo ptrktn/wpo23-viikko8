@@ -38,4 +38,8 @@ class Brewery < ApplicationRecord
 
     broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
   end
+
+  after_destroy_commit do
+    broadcast_remove_to "breweries_index"
+  end
 end
