@@ -30,9 +30,13 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
-        format.turbo_stream {          
+        format.turbo_stream {
           status = @brewery.active? ? "active" : "retired"
-          render turbo_stream: turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
+          count = @brewery.active? ? Brewery.active.count : Brewery.retired.count
+          render turbo_stream: [
+            turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery }),
+            turbo_stream.update("#{status}_brewery_count", partial: "brewery_count", locals: { status:, count: })
+          ]
         }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
@@ -62,7 +66,9 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream {
-        nil
+        status = @brewery.active? ? "active" : "retired"
+        count = @brewery.active? ? Brewery.active.count : Brewery.retired.count
+        render turbo_stream: turbo_stream.update("#{status}_brewery_count", partial: "brewery_count", locals: { status:, count: })
       }
       format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
       format.json { head :no_content }
@@ -84,7 +90,8 @@ class BreweriesController < ApplicationController
   def active
     render partial: 'brewery_list', locals: {
       status: 'active',
-      breweries: Brewery.active.order(:name)
+      breweries: Brewery.active.order(:name),
+      count: Brewery.active.count
     }
   end
 
@@ -92,7 +99,8 @@ class BreweriesController < ApplicationController
     @retired_breweries =
       render partial: 'brewery_list', locals: {
         status: 'retired',
-        breweries: Brewery.retired.order(:name)
+        breweries: Brewery.retired.order(:name),
+        count: Brewery.retired.count
       }
   end
 

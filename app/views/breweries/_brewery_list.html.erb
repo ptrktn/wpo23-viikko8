@@ -1,6 +1,9 @@
 <%= turbo_frame_tag "#{status}_brewery_list_frame", data: { turbo_action: "advance" } do %>
 
-<p> Number of <%= status %> breweries: <%= breweries.count %> </p>
+<p>
+  Number of <%= status %> breweries:
+  <%= render partial: "brewery_count", locals: {status: status, count: count} %>
+</p>
 
   <table class="table table-striped table-hover">
     <thead>
