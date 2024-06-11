@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'breweries#index'
 
-  resources :ratings, only: [:index, :new, :create, :destroy, :show]
+  resources :ratings, only: [:index, :new, :create, :show]
+  delete 'ratings', to: 'ratings#destroy'
   resource :session, only: [:new, :create, :destroy]
 
   get 'signup', to: 'users#new'
@@ -40,4 +41,6 @@ Rails.application.routes.draw do
 
   get 'beerlist', to: 'beers#list'
   get 'brewerylist', to: 'breweries#list'
+
+  get 'calculator', to: 'misc#calculator'
 end
