@@ -10,6 +10,8 @@ export default class extends Controller {
 		const amount = parseFloat(this.amountTarget.value);
 		const abv = parseFloat(this.abvTarget.value);
 		const price = parseFloat(this.priceTarget.value);
+		// numeric values are required to do the math
+		if (isNaN(amount) || isNaN(abv) || isNaN(price)) return;
 		// Amounts of alcohol tax per liter of pure alcohol for beers.
 		let alcoholTax = 0;
 		switch (true) {
@@ -34,7 +36,7 @@ export default class extends Controller {
 
 	reset(event) {
 		event.preventDefault();
-		this.amountTarget.value = 0;
+		this.amountTarget.value = "";
 		this.abvTarget.value = 0;
 		this.priceTarget.value = 0;
 		document.getElementById("result").innerHTML = "";
