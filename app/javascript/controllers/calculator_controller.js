@@ -1,13 +1,18 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-	static targets = ["amount", "abv", "price"];
+	static targets = ["amount", "abv", "price", "custom_amount"];
 	static values = { vat: Number };
+
+	change(event) {
+		// a new option was selected!
+		document.getElementById("custom-amount-input").style.visibility = (event.target.value === "" ? "visible" : "hidden");
+	}
 	
 	calculate(event) {
 		// Prevent the default form submission from reloading the page.
 		event.preventDefault();
-		const amount = parseFloat(this.amountTarget.value);
+		const amount = (this.amountTarget.value !== "" ? parseFloat(this.amountTarget.value) : parseFloat(this.custom_amountTarget.value));
 		const abv = parseFloat(this.abvTarget.value);
 		const price = parseFloat(this.priceTarget.value);
 		// numeric values are required to do the math
