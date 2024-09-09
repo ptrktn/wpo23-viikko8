@@ -1,4 +1,4 @@
-<%= form_with(model: brewery) do |form| %>
+<%= form_with(model: brewery, data: { controller: "breweries" }) do |form| %>
   <% if brewery.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(brewery.errors.count, "error") %> prohibited this brewery from being saved:</h2>
@@ -13,20 +13,21 @@
 
   <div>
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, data: { "breweries-target": "name" } %>
   </div>
 
   <div>
     <%= form.label :year, style: "display: block" %>
-    <%= form.number_field :year %>
+    <%= form.number_field :year, data: { "breweries-target": "year" } %>
   </div>
 
   <div>
 	<%= form.label :active, style: "display: block" %>
-	<%= form.check_box :active %>
+	<%= form.check_box :active, data: { "breweries-target": "active" } %>
   </div>
 
   <div>
     <%= form.submit %>
+    <button class="btn btn-secondary" data-action="breweries#reset">Reset</button>
   </div>
 <% end %>
