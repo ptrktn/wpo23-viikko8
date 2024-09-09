@@ -1,4 +1,4 @@
-<%= form_with(model: brewery, data: { controller: "breweries" }) do |form| %>
+<%= form_with(model: brewery, data: { controller: "breweries", action: "turbo:submit-end->breweries#reset"  }) do |form| %>
   <% if brewery.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(brewery.errors.count, "error") %> prohibited this brewery from being saved:</h2>
