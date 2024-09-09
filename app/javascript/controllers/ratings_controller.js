@@ -1,8 +1,18 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+	static targets = ["select_all"];
+
 	connect() {
 		console.log("Hello, Stimulus!");
+	}
+
+	select_all(event) {
+		console.log("ratings select_all", event.target.checked);
+		var checkboxes = document.querySelectorAll('input[name="ratings[]"');
+		for (var i = 0; i < checkboxes.length; i++) {
+			checkboxes[i].checked = event.target.checked;
+		}
 	}
 
   destroy() {
